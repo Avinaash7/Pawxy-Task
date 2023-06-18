@@ -71,6 +71,7 @@ public class DownloadFragment extends Fragment {
 
     private DownloadProgressListener downloadProgressListener;
     private long videoDurationInSeconds;
+    Boolean forreal = false;
 
 
     String filsize;
@@ -306,13 +307,18 @@ public class DownloadFragment extends Fragment {
             @Override
             public void apply(Statistics newStatistics) {
                 float progress = Float.parseFloat(String.valueOf(newStatistics.getTime())) / (1000);
+                int actualpercent = (int) ((progress/videoDurationInSeconds) * 100);
+                if(forreal!=true && actualpercent>95){
+                    progress = 0;
+                }
+                Log.i("InitialPercent", String.valueOf(progress));
 
 
-
+                float finalProgress = progress;
                 requireActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        updateProgress(progress);
+                        updateProgress(finalProgress);
                     }
                 });
 
@@ -326,6 +332,7 @@ public class DownloadFragment extends Fragment {
                 if (returnCode == Config.RETURN_CODE_SUCCESS) {
                     // Conversion completed successfully
                     progressbar.setProgressCompat(100,true);
+
                     distext.setText("Success");
                     totsizetv.setVisibility(View.INVISIBLE);
                     finalsym.setImageResource(R.drawable.greentick);
@@ -379,25 +386,24 @@ public class DownloadFragment extends Fragment {
 
     private void updateProgress(float progress) {
         String formattedTime = formatTime((int) progress);
-        int percent = (int) ((progress/videoDurationInSeconds)* 100)  % 100;
         int actualpercent = (int) ((progress/videoDurationInSeconds) * 100);
-        if(percent<50){
-            distext.setText("Converting...");
-            progressbar.setIndicatorColor(Color.parseColor("#FFBB0E"));
-        }
-        else if(percent>50 && percent<90){
+        Log.i("Percent", String.valueOf(actualpercent));
+        Log.i("ActualPercent", String.valueOf(actualpercent));
+
+
             distext.setText("Converting...");
             totsizetv.setText(videoduration);
             downsize.setVisibility(View.VISIBLE);
             downsize.setText(formattedTime+" / ");
-            progressbar.setProgressCompat(percent,true);
+            progressbar.setProgressCompat(actualpercent,true);
             progressbar.setIndicatorColor(Color.parseColor("#FFBB0E"));
-        }
-        else if(percent>90){
+
+        if(actualpercent>90){
+            forreal = true;
             distext.setText("Saving...");
             downsize.setVisibility(View.INVISIBLE);
             totsizetv.setText(actualpercent + "%");
-            progressbar.setProgressCompat(percent,true);
+            progressbar.setProgressCompat(actualpercent,true);
             progressbar.setIndicatorColor(Color.parseColor("#28C6D0"));
         }
 
@@ -441,7 +447,7 @@ public class DownloadFragment extends Fragment {
                     DecimalFormat df = new DecimalFormat("#.##");
                     double downloadedize = ((progressValue/100) * fileSizeInMB);
                     double roundedNumber = Double.parseDouble(df.format(downloadedize));
-                    int val = Math.round(progressValue/2);
+                    int val = Math.round(progressValue);
                     Log.i("Progress", String.valueOf(val));
                     progressbar.setProgressCompat(val,true);
                     downsize.setText(String.valueOf(roundedNumber)+"MB ");
