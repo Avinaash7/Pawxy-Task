@@ -260,7 +260,7 @@ public class StartFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
                 intent.addCategory(Intent.CATEGORY_DEFAULT);
-                // Optionally, you can set the initial directory to the SD card
+
                 Uri sdCardUri = Uri.parse("content://com.android.externalstorage.documents/tree/primary%3A");
                 intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, sdCardUri);
 

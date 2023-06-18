@@ -70,11 +70,11 @@ import okhttp3.ResponseBody;
 public class DownloadFragment extends Fragment {
 
     private DownloadProgressListener downloadProgressListener;
-    private long videoDurationInSeconds; // Duration of the video in seconds
+    private long videoDurationInSeconds;
 
-    Boolean success = false;
+
     String filsize;
-    private boolean conversionInProgress; // Flag to track if conversion is in progress
+    private boolean conversionInProgress;
     TextView downsize;
 
     String source;
@@ -202,16 +202,14 @@ public class DownloadFragment extends Fragment {
 
                 Python py = Python.getInstance();
                 PyObject pyObject = py.getModule("media");
-                // Rest of your code here
-                //PyObject result = pyObject.callAttr("download_media", getArguments().getString("link"));
-                downloadProgressListener = new YourDownloadProgressListener2();
+                downloadProgressListener = new YtDownloadProgressListener();
                 PyObject result = pyObject.callAttr("download_media", getArguments().getString("link"), downloadProgressListener);
                 Log.i("resultx",result.toString());
 
                 uniqueTitle = result.toString();
                 source = "/storage/emulated/0/Download/"  + uniqueTitle;
 
-                //ffmpeg();
+
                 convertVideoToMp3();
 
 
@@ -240,7 +238,7 @@ public class DownloadFragment extends Fragment {
                 return String.valueOf(views);
             }
         } catch (NumberFormatException e) {
-            // Invalid number format, handle it accordingly
+
             return "Invalid number format";
         }
     }
@@ -250,15 +248,15 @@ public class DownloadFragment extends Fragment {
         int seconds = 0;
 
         if (timeComponents.length == 1) {
-            // Duration is in seconds format
+
             seconds = Integer.parseInt(timeComponents[0]);
         } else if (timeComponents.length == 2) {
-            // Duration is in MM:SS format
+
             int minutes = Integer.parseInt(timeComponents[0]);
             int secondsComponent = Integer.parseInt(timeComponents[1]);
             seconds = minutes * 60 + secondsComponent;
         } else if (timeComponents.length == 3) {
-            // Duration is in H:MM:SS format
+
             int hours = Integer.parseInt(timeComponents[0]);
             int minutes = Integer.parseInt(timeComponents[1]);
             int secondsComponent = Integer.parseInt(timeComponents[2]);
@@ -284,7 +282,7 @@ public class DownloadFragment extends Fragment {
         File destFile = new File(checkdest);
         int suffix = 1;
         while (destFile.exists()) {
-            // Append the suffix to the filename
+
             dest.replace(".mp3","");
             String newFileName = uniformizedText + "(" + suffix + ")";
             dest = getArguments().getString("path") + "/" + newFileName+".mp3";
@@ -380,8 +378,6 @@ public class DownloadFragment extends Fragment {
 
 
     private void updateProgress(float progress) {
-
-
         String formattedTime = formatTime((int) progress);
         int percent = (int) ((progress/videoDurationInSeconds)* 100)  % 100;
         int actualpercent = (int) ((progress/videoDurationInSeconds) * 100);
@@ -392,6 +388,7 @@ public class DownloadFragment extends Fragment {
         else if(percent>50 && percent<90){
             distext.setText("Converting...");
             totsizetv.setText(videoduration);
+            downsize.setVisibility(View.VISIBLE);
             downsize.setText(formattedTime+" / ");
             progressbar.setProgressCompat(percent,true);
             progressbar.setIndicatorColor(Color.parseColor("#FFBB0E"));
@@ -413,7 +410,7 @@ public class DownloadFragment extends Fragment {
         int minutes = (timeInSeconds % 3600) / 60;
         int seconds = timeInSeconds % 60;
 
-        // Format the time as HH:MM:SS
+
         String result = String.format("%02d:%02d:%02d", hours, minutes, seconds);
         if(result.charAt(0) == '0' && result.charAt(1) == '0'){
              result = result.substring(3);
@@ -430,10 +427,10 @@ public class DownloadFragment extends Fragment {
     }
 
 
-    private class YourDownloadProgressListener2 implements DownloadProgressListener {
+    private class YtDownloadProgressListener implements DownloadProgressListener {
         @Override
         public void updateProgress(String percent, String totalBytes) {
-            // Update the progress bar on the UI thread
+
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
@@ -445,6 +442,7 @@ public class DownloadFragment extends Fragment {
                     double downloadedize = ((progressValue/100) * fileSizeInMB);
                     double roundedNumber = Double.parseDouble(df.format(downloadedize));
                     int val = Math.round(progressValue/2);
+                    Log.i("Progress", String.valueOf(val));
                     progressbar.setProgressCompat(val,true);
                     downsize.setText(String.valueOf(roundedNumber)+"MB ");
                 }
