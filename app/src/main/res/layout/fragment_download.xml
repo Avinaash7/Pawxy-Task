@@ -125,6 +125,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:text="0MB"
+                android:fontFamily="@font/plusjakartasans_medium"
                 android:id="@+id/downloaded_size"
                 android:textColor="#858181"
                 android:layout_height="wrap_content"/>
@@ -133,6 +134,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:text=" / 4.25MB"
+                android:fontFamily="@font/plusjakartasans_medium"
                 android:textColor="#858181"
                 android:layout_height="wrap_content"/>
             <ImageView
