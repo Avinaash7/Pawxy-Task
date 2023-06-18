@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DownloadFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:backgroundTint="#FAFAFA"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="15dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="180dp">
+
+                <ImageView
+                    android:src="@color/black"
+                    android:id="@+id/imagev"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/plusjakartasans_semibold"
+                android:textColor="@color/black"
+                android:id="@+id/title_name"
+                android:maxLines="2"
+                android:layout_width="match_parent"
+                android:text="Youtube Title Name "
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/views_tv"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="10sp"
+                    android:textColor="#858181"
+                    android:fontFamily="@font/plusjakartasans_medium"
+                    android:layout_width="wrap_content"
+                    android:text="1.45B Views"
+                    android:drawablePadding="5dp"
+                    android:layout_gravity="center"
+                    android:drawableStart="@drawable/ic_baseline_remove_red_eye_24"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/likes_tv"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="10sp"
+                    android:layout_width="wrap_content"
+                    android:text="17.4M Likes"
+                    android:fontFamily="@font/plusjakartasans_medium"
+                    android:drawablePadding="5dp"
+                    android:textColor="#858181"
+                    android:drawableStart="@drawable/ic_baseline_thumb_up_24"
+                    android:layout_height="wrap_content"/>
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/display_text"
+            android:layout_width="wrap_content"
+            android:text="Downloading..."
+            android:fontFamily="@font/plusjakartasans_semibold"
+            android:textColor="@color/black"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="end"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:text="0MB"
+                android:id="@+id/downloaded_size"
+                android:textColor="#858181"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/total_size"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:text=" / 4.25MB"
+                android:textColor="#858181"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/final_symbol"
+                android:visibility="gone"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:src="@drawable/greentick"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="match_parent"
+        android:indeterminate="false"
+        app:indicatorColor="#3690FA"
+        android:id="@+id/pb"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/result"
+        android:textSize="10sp"
+        android:drawableStart="@drawable/star"
+        android:drawablePadding="3dp"
+        android:visibility="invisible"
+        android:fontFamily="@font/plusjakartasans_medium"
+        android:textColor="#858181"
+        android:text="MP3 successfully saved into selected folder"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="bottom"
+        android:layout_height="match_parent">
+
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            app:cornerRadius="8dp"
+            android:layout_margin="20dp"
+            android:id="@+id/bottom_btn"
+            android:textColor="@color/white"
+            android:backgroundTint="#892EFF"
+            android:text="Download Another MP3"
+            android:visibility="gone"
+            android:layout_height="60dp"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
